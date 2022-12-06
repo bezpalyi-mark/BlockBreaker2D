@@ -81,6 +81,6 @@ public class Ball : MonoBehaviour
 	{
 		speed = 0;
 		yield return new WaitForSeconds(1.0f);	//Wait 1 second
-		speed = 500;
+		speed = 1000;
 	}
 }

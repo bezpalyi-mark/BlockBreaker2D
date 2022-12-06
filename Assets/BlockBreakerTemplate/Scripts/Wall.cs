@@ -8,8 +8,6 @@ public class Wall : MonoBehaviour
 
     public bool rotating;
 
-    public Rigidbody2D rig;	
-
 	void Start () 
 	{
 		manager.walls.Add(gameObject);

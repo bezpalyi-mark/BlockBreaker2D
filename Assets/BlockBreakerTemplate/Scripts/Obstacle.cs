@@ -5,8 +5,42 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     public GameManager manager;
+    public bool spawnDelay;
     private int numberOfStrokes = 2;
     private List<Color> colors = new List<Color>();
+
+    void Awake()
+    {
+        if (spawnDelay)
+        {
+            MeshRenderer renderer = GetComponent<MeshRenderer>();
+            renderer.enabled = false;
+
+            BoxCollider2D collider = GetComponent<BoxCollider2D>();
+            collider.enabled = false;
+
+            int random = GetRandomValue(
+                new RandomSelection(0, 30, .05f),
+                new RandomSelection(30, 60, .45f),
+                new RandomSelection(60, 90, .30f),
+                new RandomSelection(90, 120, .15f),
+                new RandomSelection(120, 150, .05f)
+            );
+
+            // this will wait 2 seconds before turning on
+            StartCoroutine(WaitToDisplay((float)random));
+        }
+    }
+
+    IEnumerator WaitToDisplay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+        renderer.enabled = true;
+
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.enabled = true;
+    }
 
     void Start()
     {
@@ -42,6 +76,45 @@ public class Obstacle : MonoBehaviour
                 manager.obstacles.Remove(gameObject);
                 Destroy(gameObject);
             }
+        }
+    }
+
+
+    int GetRandomValue(params RandomSelection[] selections)
+    {
+        float rand = Random.value;
+        float currentProb = 0;
+        foreach (var selection in selections)
+        {
+            currentProb += selection.probability;
+            if (rand <= currentProb)
+                return selection.GetValue();
+        }
+
+        //will happen if the input's probabilities sums to less than 1
+        //throw error here if that's appropriate
+        return -1;
+    }
+
+    private class RandomSelection
+    {
+        public float probability;
+
+        public int min;
+
+        public int max;
+
+
+        public RandomSelection(int minP, int maxP, float probabilityP)
+        {
+            this.min = minP;
+            this.max = maxP;
+            this.probability = probabilityP;
+        }
+
+        public int GetValue()
+        {
+            return Random.Range(min, max);
         }
     }
 }
