@@ -146,7 +146,10 @@ int colorId = 0;
 на поточному рядку.
 
 Далі ми випадковим образом обираємо, що згенерувати:
-`int randomChoice = Random.Range(1, 4);`
+
+````
+int randomChoice = Random.Range(1, 4);
+````
 
 Генерується число від 1 до 3, де:
  * 1 – згенерувати блок
@@ -160,8 +163,11 @@ case 3:
 if (wallsCount < wallsCountToGenerate)
 ````
 
-Коли ми вже згенерували об’єкт, ми зберігаємо його розміри в змінну ``sizesOfNewObject:
-`sizesOfNewObject = new Vector3(obstacle.transform.localScale.x, obstacle.transform.localScale.y, 0);`
+Коли ми вже згенерували об’єкт, ми зберігаємо його розміри в змінну `sizesOfNewObject`:
+
+````
+sizesOfNewObject = new Vector3(obstacle.transform.localScale.x, obstacle.transform.localScale.y, 0);
+````
 
 Приклад генерації контенту, наприклад стіни:
 
@@ -193,12 +199,16 @@ Vector3 newObjectPosition = new Vector3(leftBorder, topBorder, 0);
 На початку ми скопіювали змінні лівої та верхньої межі в окремі змінні. Використовуючи їх, додаємо до лівої межі
 довжину об'єкта (ось Х), що ми щойно згенерували + 1 (для проміжків):
 
-`leftBorder += (int)sizesOfNewObject.x + 1;`
+````
+leftBorder += (int)sizesOfNewObject.x + 1;
+````
 
 Ось для чого ми зберігали розміри нового об'єкту - щоб здвинути ліву межу праворуч, тобто місця стає менше.
 Далі нам потрібно перевірити, що наша ліва межа не дійшла ще до правої, щоб нам не вилізти за праву межу.
 
-`if (leftBorder >= rightSpawnBorder)`
+````
+if (leftBorder >= rightSpawnBorder)
+````
 
 Якщо ми вже дійшли до правої межі, нам потрібно перейти на наступний рядок, тобто спуститись униз по осі Y. Коли ми
 спускаємось на наступний рядок, ми знову починаємо йти з початку лівої межі.
