@@ -242,3 +242,6 @@ if (topBorder <= bottomSpawnBorder)
 ![](docs/generation_example_2.png)
 
 ![](docs/generation_example_3.png)
+
+### P.S
+Для прискорення часу утримуйте клавішу `W`.
